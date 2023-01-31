@@ -1,0 +1,31 @@
+serviceAccount:
+  create: true
+
+rbac:
+  create: true
+
+controller:
+  replicaCount: 2
+  minAvailable: 1
+  metrics:
+    enabled: true
+  config:
+    server-tokens: false
+    use-proxy-protocol: false
+    compute-full-forwarded-for: true
+    use-forwarded-headers: true
+  service:
+    type: NodePort
+    externalTrafficPolicy: "Local"
+    publishService:
+      enabled: true
+  admissionWebhooks:
+    enabled: false
+
+  resources:
+    limits:
+      cpu: 200m
+      memory: 512Mi
+    requests:
+      cpu: 150m
+      memory: 512Mi

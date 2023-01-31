@@ -1,0 +1,4 @@
+certificateArn: ${certificate_arn}
+subnets: ${subnets}
+baseDomain: ${base_domain}
+wafArn: ${waf_arn}

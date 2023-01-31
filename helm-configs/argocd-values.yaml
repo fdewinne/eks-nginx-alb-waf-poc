@@ -1,0 +1,45 @@
+redis-ha:
+  enabled: true
+
+controller:
+  replicas: 1
+
+server:
+  certificate:
+    # -- Enables a certificate manager certificate
+    enabled: true
+    # -- Certificate manager domain
+    domain: argocd.${clusterDomain}
+    issuer:
+      # -- Certificate manager issuer
+      kind: ClusterIssuer
+      # -- Certificate manager name
+      name: cert-manager-letsencrypt-production-route53
+    # -- Certificate manager additional hosts
+    additionalHosts: [ ]
+    # -- Certificate manager secret name
+    secretName: argocd-server-tls
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+  ingress:
+    enabled: true
+    hosts:
+      - argocd.${clusterDomain}
+    annotations:
+      cert-manager.io/cluster-issuer: cert-manager-letsencrypt-production-route53
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    tls:
+      - hosts:
+        - argocd.${clusterDomain}
+        secretName: argocd-server-tls
+
+repoServer:
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+
+applicationSet:
+  replicaCount: 2

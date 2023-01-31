@@ -1,0 +1,9 @@
+apiVersion: v2
+name: alb-ingress
+description: A Helm chart for ALB Ingress connecting to nginx
+
+type: application
+
+version: 0.1.0
+
+appVersion: "1.0.0"
